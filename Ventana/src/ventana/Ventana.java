@@ -1,6 +1,7 @@
 package ventana;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.*;
 
@@ -24,15 +25,19 @@ public class Ventana extends JFrame {
 
         
         
-        JLabel label = new JLabel("click aqui");
-        label.setBounds(180, 100, 80, 80);
+        JLabel label = new JLabel("Bienvenido");
+        label.setBounds(160, 100, 80, 30);
+        label.setBackground(Color.CYAN);
+        label.setOpaque(true);
+        label.setFont(new Font("Italika",Font.BOLD, 12));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(label);
         
         
 
 
         JButton boton = new JButton("Boton");
-        boton.setBounds(180, 160, 100, 30);
+        boton.setBounds(150, 160, 100, 30);
         panel.add(boton);
 
         
