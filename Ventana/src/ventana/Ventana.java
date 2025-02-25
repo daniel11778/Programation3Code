@@ -1,7 +1,10 @@
 package ventana;
 
 
+
+
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -72,6 +75,31 @@ public class Ventana extends JFrame {
         panel.add(salado);
         panel.add(saludable);
 
+        JMenuBar barra = new JMenuBar();
+        
+        JMenu menu1 = new JMenu("Archivo");
+        JMenu menu2 = new JMenu("Ayuda");
+        
+        JMenuItem op1 = new JMenuItem("Nuevo");
+        JMenuItem op2 = new JMenuItem("Abrir");
+        JMenuItem op3 = new JMenuItem("Guardar");
+        JMenuItem op4 = new JMenuItem("Cerrar");
+        
+        menu1.add(op1);
+        menu1.add(op2);
+        menu1.add(op3);
+        menu1.add(op4);
+
+        JRadioButtonMenuItem opR1 = new JRadioButtonMenuItem("Manual");
+        JRadioButtonMenuItem opR2 = new JRadioButtonMenuItem("Soporte");
+
+        menu2.add(opR1);
+        menu2.add(opR2);
+        
+        barra.add(menu1);
+        barra.add(menu2);
+        setJMenuBar(barra);
+        
         // Campo "TERMINOS" (subido)
         JLabel terminosLabel = new JLabel("TERMINOS", SwingConstants.LEFT);
         terminosLabel.setBounds(50, 290, 300, 20); 
