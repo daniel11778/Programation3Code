@@ -1,8 +1,14 @@
 package ventana;
 
 
+
 import java.awt.BorderLayout;
+
+
+
+
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -105,6 +111,7 @@ public class Ventana extends JFrame {
 
 	    
 	    setVisible(true);
+
 
     }
 
