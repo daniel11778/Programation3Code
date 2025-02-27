@@ -5,38 +5,28 @@ import java.awt.*;
 
 public class Calculadora extends JFrame {
     JTextField pantalla;
-    int x = 10, y = 10; //iniciales
+    int x = 10, y = 10;
 
     public Calculadora() {
         setTitle("Calculadora");
         setSize(300, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(null);
         getContentPane().setBackground(Color.DARK_GRAY);
 
-        pantalla = new JTextField();
-        pantalla.setBounds(10, 10, 265, 50);
-        pantalla.setEditable(false);
-        pantalla.setBackground(Color.BLACK);
-        pantalla.setForeground(Color.WHITE);
-        pantalla.setFont(new Font("Arial", Font.BOLD, 24));
-        add(pantalla);
-
-        JButton botonCE = new JButton("CE");
-        botonCE.setBounds(10, 70, 265, 40);
-        botonCE.setFont(new Font("Arial", Font.BOLD, 20));
-        botonCE.setBackground(Color.GRAY);
-        botonCE.setForeground(Color.BLACK);
-        add(botonCE);
-
         JPanel panel = new JPanel();
-        panel.setLayout(null);
+        panel.setLayout(new BorderLayout());
         panel.setBackground(Color.DARK_GRAY);
-        panel.setBounds(10, 120, 265, 280);
         add(panel);
-
-        // Matriz de botones
+        
+        JLabel pantalla = new JLabel("0");
+        pantalla.setFont(new Font("Arial", Font.BOLD, 50));  
+        pantalla.setHorizontalAlignment(SwingConstants.RIGHT);
+        pantalla.setBorder(BorderFactory.createLineBorder(Color.white));
+        panel.add(pantalla,BorderLayout.NORTH);
+        
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayout(4,4));
+        panel.add(panel2,BorderLayout.CENTER);
         String[][] botones = {
             {"7", "8", "9", "/"},
             {"4", "5", "6", "*"},
@@ -48,7 +38,7 @@ public class Calculadora extends JFrame {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 JButton boton = new JButton(botones[i][j]);
-                boton.setBounds(x, y, 60, 50);
+                
                 boton.setFont(new Font("Arial", Font.BOLD, 20));
                 
                 if ("/*-+=.".contains(botones[i][j])) {
@@ -58,7 +48,7 @@ public class Calculadora extends JFrame {
                     boton.setBackground(Color.DARK_GRAY);
                     boton.setForeground(Color.WHITE);
                 }
-                panel.add(boton);
+                panel2.add(boton);
                 x += 65;
             }
             x = 10;

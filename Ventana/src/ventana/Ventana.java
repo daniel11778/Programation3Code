@@ -30,7 +30,7 @@ public class Ventana extends JFrame {
         titulo.setForeground(new Color(44, 62, 80)); // Color de texto oscuro
         panel.add(titulo);
 
-        // Campo NOMBRE DE USUARIO 
+        // Campo NOMBRE DARIO 
         JLabel nombreLabel = new JLabel("NOMBRE DE USUARIO:", SwingConstants.LEFT);
         nombreLabel.setBounds(50, 80, 300, 20);
         nombreLabel.setForeground(new Color(44, 62, 80));
