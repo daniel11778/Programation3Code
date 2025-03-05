@@ -107,6 +107,7 @@ public class Ventana extends JFrame {
 
         JTextField montofield = new JTextField();
         panel3.add(montofield);
+        
 
 
 	    
