@@ -32,7 +32,7 @@ public class ventana extends JFrame {
                 } 
                 else 
                 {
-                    botones[i][j] = new JButton("");
+                    botones[i][j] = new JButton();
                     botones[i][j].setBackground(new Color(102, 204, 255));
 
                 }
