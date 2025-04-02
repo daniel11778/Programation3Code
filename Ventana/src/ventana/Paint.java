@@ -104,7 +104,7 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 		
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this); 
-	
+        panel.setBackground(Color.white);
 		panel.setBounds(257, 11, 717, 539);
 		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		contentPane.add(panel);
@@ -112,6 +112,7 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 
 		
 		JPanel panel_1 = new JPanel();
+		
 		panel_1.setBounds(10, 11, 237, 539);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -128,9 +129,21 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 		});
 		
 		JPanel panel_2 = new JPanel();
+		
 		panel_2.setBounds(10, 300, 217, 228);
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(3, 3, 10, 10));
+		
+		JButton btnBorrarTodo = new JButton("Borrar Todo");
+		btnBorrarTodo.setBounds(47, 260, 130, 30); 
+		panel_1.add(btnBorrarTodo);
+
+		btnBorrarTodo.addActionListener(e -> {
+		    trazos.clear();
+		    figuras.clear();
+		    puntos.clear();
+		    panel.repaint();
+		});
 		
 		JButton btnNewButton_1 = new JButton("");
 		btnNewButton_1.addActionListener(e -> colorActual = new Color(255,0,0));
