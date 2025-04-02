@@ -42,7 +42,8 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
     private Color colorActual = Color.BLACK; 
     private JPanel panel; 
     private int grosor = 3;
-
+    private int tool = 0;
+    private List<Figura> figuras = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -88,6 +89,15 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
                         g2.drawLine(p1.x, p1.y, p2.x, p2.y);
                     }
                 }
+                for (Figura figura : figuras) {
+                    g2.setColor(figura.color);
+                    if (figura.esCirculo) {
+                        g2.drawOval(figura.x, figura.y, figura.w, figura.h);
+                    } else {
+                        g2.drawRect(figura.x, figura.y, figura.w, figura.h);
+                    }
+                }
+
             }
 
 		};
@@ -174,12 +184,14 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 		panel_3.setLayout(new GridLayout(1, 0, 10, 10));
 		
 		JButton btnNewButton_9 = new JButton("");
+		btnNewButton_9.addActionListener(e -> tool = 0);
 		Image usuarioImg1= new ImageIcon("pincel.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon usuarioIcon1 = new ImageIcon(usuarioImg1);
 		btnNewButton_9.setIcon(usuarioIcon1);
 		panel_3.add(btnNewButton_9);
 		
 		JButton btnNewButton_10 = new JButton("");
+		btnNewButton_10.addActionListener(e -> tool = 1);
 		Image usuarioImg2= new ImageIcon("borrador.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon usuarioIcon2 = new ImageIcon(usuarioImg2);
 		btnNewButton_10.setIcon(usuarioIcon2);
@@ -191,25 +203,29 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 		panel_4.setLayout(new GridLayout(1, 0, 10, 10));
 		
 		JButton btnNewButton_11 = new JButton("");
+		btnNewButton_11.addActionListener(e -> tool = 5);
 		Image usuarioImg3= new ImageIcon("triangulo.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon usuarioIcon3 = new ImageIcon(usuarioImg3);
 		btnNewButton_11.setIcon(usuarioIcon3);
 		panel_4.add(btnNewButton_11);
 		
 		JButton btnNewButton_12 = new JButton("");
+		btnNewButton_12.addActionListener(e -> tool = 4);
 		Image usuarioImg4= new ImageIcon("circulo.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon usuarioIcon4 = new ImageIcon(usuarioImg4);
 		btnNewButton_12.setIcon(usuarioIcon4);
 		panel_4.add(btnNewButton_12);
 		
 		JButton btnNewButton_13 = new JButton("");
+		btnNewButton_13.addActionListener(e -> tool = 2);
 		Image usuarioImg5= new ImageIcon("cuadrado.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon usuarioIcon5 = new ImageIcon(usuarioImg5);
 		btnNewButton_13.setIcon(usuarioIcon5);
 		panel_4.add(btnNewButton_13);
 		
 		JButton btnNewButton_14 = new JButton("");
-		Image usuarioImg6= new ImageIcon("rectangulo.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		btnNewButton_14.addActionListener(e -> tool = 3);
+		Image usuarioImg6= new ImageIcon("dospuntos.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon usuarioIcon6 = new ImageIcon(usuarioImg6);
 		btnNewButton_14.setIcon(usuarioIcon6);
 		panel_4.add(btnNewButton_14);
@@ -221,6 +237,26 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 		lblNewLabel.setBounds(10, 11, 217, 34);
 		panel_1.add(lblNewLabel);
 
+	}
+	
+	class Figura {
+	    int x, y, w, h;
+	    Color color;
+	    boolean esCirculo;
+
+	    public Figura(int x, int y, int w, int h, Color color) {
+	        this.x = x;
+	        this.y = y;
+	        this.w = w;
+	        this.h = h;
+	        this.color = color;
+	        this.esCirculo = false;
+	    }
+
+	    public Figura(int x, int y, int w, int h, Color color, boolean esCirculo) {
+	        this(x, y, w, h, color);
+	        this.esCirculo = esCirculo;
+	    }
 	}
 	
 	class Trazo {
@@ -244,10 +280,26 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-	    Trazo nuevoTrazo = new Trazo(grosor,colorActual); 
-	    nuevoTrazo.puntos.add(e.getPoint());
-	    trazos.add(nuevoTrazo);
-	    panel.repaint();
+		 if (tool == 0 || tool == 1) { 
+		        trazos.add(new Trazo(grosor, tool == 1 ? Color.WHITE : colorActual));
+		        trazos.get(trazos.size() - 1).puntos.add(e.getPoint());
+		    } else if (tool == 2) { 
+		        figuras.add(new Figura(e.getX() - 22, e.getY(), 50, 50, colorActual));
+		    } else if (tool == 3) { 
+		            if (puntos.size() < 1) {
+		                puntos.add(e.getPoint());
+		            } else {
+		                Point p1 = puntos.get(0);
+		                Point p2 = e.getPoint();
+		                trazos.add(new Trazo(grosor, colorActual));
+		                trazos.get(trazos.size() - 1).puntos.add(p1);
+		                trazos.get(trazos.size() - 1).puntos.add(p2);
+		                puntos.clear();
+		            }
+		    } else if (tool == 4) { 
+		        figuras.add(new Figura(e.getX() - 22, e.getY(), 50, 50, colorActual, true));
+		    }
+		    panel.repaint();
 	}
 
 	@Override
@@ -270,10 +322,12 @@ public class Paint extends JFrame implements MouseListener,MouseMotionListener{
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-	    if (!trazos.isEmpty()) {
+		if (tool == 0 || tool == 1) { 
+		if (!trazos.isEmpty()) {
 	        trazos.get(trazos.size() - 1).puntos.add(e.getPoint()); 
 	        panel.repaint();
 	    }
+		}
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
