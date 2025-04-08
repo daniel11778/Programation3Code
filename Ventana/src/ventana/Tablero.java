@@ -29,6 +29,8 @@ public class Tablero extends JFrame implements KeyListener {
         add(panelDibujo, BorderLayout.CENTER);
 
         btnReiniciar = new JButton("Reiniciar");
+        btnReiniciar.addActionListener(e -> {x = 50; y = 50; panelDibujo.repaint(); this.requestFocus();});
+        
         add(btnReiniciar, BorderLayout.SOUTH);
 
         addKeyListener(this);
@@ -42,16 +44,20 @@ public class Tablero extends JFrame implements KeyListener {
         System.out.println(key);
         switch (key) {
             case KeyEvent.VK_LEFT:
+            	if(x > 0)
                 x -= 10;
                 break;
             case KeyEvent.VK_RIGHT:
-                x += 10;
+                if (x + ancho <= panelDibujo.getWidth())
+                    x += 10;
                 break;
             case KeyEvent.VK_UP:
+            	if(y > 0)
                 y -= 10;
                 break;
             case KeyEvent.VK_DOWN:
-                y += 10;
+                if (y + alto<= panelDibujo.getHeight())
+                    y += 10;
                 break;
         }
 
